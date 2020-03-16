@@ -1,0 +1,11 @@
+<ion-list lines="none">
+  <ion-item>
+    <ion-label position="stacked">Destination</ion-label>
+    <ion-input [(ngModel)]="destination" placeholder="Destination"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label position="stacked">Amount</ion-label>
+    <ion-input [(ngModel)]="amount" placeholder="Amount"></ion-input>
+  </ion-item>
+  <ion-button expand="block" (click)='send()' color="primary">Send</ion-button>
+</ion-list>

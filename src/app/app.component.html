@@ -1,0 +1,55 @@
+<ion-app>
+  <ion-split-pane contentId="main-content">
+    <ion-menu contentId="main-content" type="overlay">
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Menu</ion-title>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content>
+        <ion-list>
+          <ion-list-header>
+            Assets
+          </ion-list-header>
+          <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages | async">
+            <ion-item [routerDirection]="'root'" [routerLink]="[p.url]">
+              <ion-icon slot="start" [name]="p.icon"></ion-icon>
+              <ion-label>
+                {{p.title}}
+              </ion-label>
+              <ion-label style='text-align: right;' slot="end">{{p.amount}}</ion-label>
+            </ion-item>
+          </ion-menu-toggle>
+          <ion-list-header>
+            Setting
+          </ion-list-header>
+          <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages2">
+            <ion-item [routerDirection]="'root'" [routerLink]="[p.url]">
+              <ion-icon slot="start" [name]="p.icon"></ion-icon>
+              <ion-label>
+                {{p.title}}
+              </ion-label>
+            </ion-item>
+          </ion-menu-toggle>
+        </ion-list>
+      </ion-content>
+    </ion-menu>
+
+    <ion-content id="main-content">
+      <ion-header>
+        <ion-toolbar>
+          <ion-buttons slot="start">
+            <ion-menu-button></ion-menu-button>
+          </ion-buttons>
+          <ion-title>
+            {{currentTitle$ | async}} <small>{{currentAccountPKH$ | async}}</small>
+          </ion-title>
+          <ion-avatar (click)='showWalletModal()' style='width: 50px; height: 50px; padding: 10px;' slot="end">
+            <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y">
+          </ion-avatar>
+        </ion-toolbar>
+      </ion-header>
+      <router-outlet></router-outlet>
+    </ion-content>
+  </ion-split-pane>
+</ion-app>

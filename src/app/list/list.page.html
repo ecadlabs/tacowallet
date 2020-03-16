@@ -1,0 +1,21 @@
+<ion-list>
+  <ion-item *ngFor="let item of txList$ | async">
+    <ion-icon *ngIf='item.status === "need_approval"' name="information-circle-outline" slot="start"></ion-icon>
+    <ion-spinner *ngIf='item.status === "pending"' slot="start" name="dots"></ion-spinner>
+    <ion-icon *ngIf='item.status === "completed"' name="checkmark-circle-outline" slot="start"></ion-icon>
+    <ion-label>
+      <ion-list lines='none'>
+        <ion-item *ngFor="let op of item.ops">
+          {{getStrTemplate(op)}}
+        </ion-item>
+      </ion-list>
+    </ion-label>
+    <ion-button *ngIf='item.status === "need_approval"' (click)='approve(item)'>Approve</ion-button>
+    <ion-button *ngIf='item.status === "pending" && hasSummary(item)' (click)='showSummary(item)'>Show</ion-button>
+  </ion-item>
+</ion-list>
+<!--
+    <div *ngIf="selectedItem" padding>
+      You navigated here from <b>{{selectedItem.title }}</b>
+    </div>
+  -->
