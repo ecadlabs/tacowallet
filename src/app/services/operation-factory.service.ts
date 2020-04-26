@@ -6,38 +6,29 @@ import { Tezos } from '@taquito/taquito/src/taquito';
 
 function uuidv4() {
   return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
-    var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+    var r = (Math.random() * 16) | 0,
+      v = c == 'x' ? r : (r & 0x3) | 0x8;
     return v.toString(16);
   });
 }
 
-const provider = 'https://api.tez.ie/rpc/babylonnet';
+const provider = 'https://api.tez.ie/rpc/carthagenet';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class OperationFactoryService {
-
-  private taquito = new TezosToolkit()
+  private taquito = new TezosToolkit();
   constructor() {
-    this.taquito.setProvider({ rpc: provider })
+    this.taquito.setProvider({ rpc: provider });
   }
 
   async create(op: RPCOperation[], appID: string): Promise<OperationRequest> {
-    const block = await this.taquito.rpc.getBlockHeader()
+    const block = await this.taquito.rpc.getBlockHeader();
     return new OperationRequest(uuidv4(), op, appID, block.level);
   }
 
-  async fromSerialized(
-    {
-      id,
-      appID,
-      ops,
-      emittedAt,
-      status,
-      response
-    }: any
-  ) {
+  async fromSerialized({ id, appID, ops, emittedAt, status, response }: any) {
     if (status === 'completed' || status === 'pending') {
       return new OperationRequest(id, ops, appID, emittedAt, status, response);
       // } else if (status === 'pending') {

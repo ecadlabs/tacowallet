@@ -5,6 +5,7 @@ module.exports = {
     os: true,
     stream: true,
     path: true,
-    buffer: true
-  }
+    buffer: true,
+    fs: 'empty',
+  },
 };

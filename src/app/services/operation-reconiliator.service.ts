@@ -2,17 +2,16 @@ import { Injectable } from '@angular/core';
 import { OperationRequest, OperationRequestStatus } from '../models/operation';
 import { TezosToolkit } from '@taquito/taquito';
 
-const provider = 'https://api.tez.ie/rpc/babylonnet';
+const provider = 'https://api.tez.ie/rpc/carthagenet';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class OperationReconiliatorService {
-
-  private taquito = new TezosToolkit()
+  private taquito = new TezosToolkit();
 
   constructor() {
-    this.taquito.setProvider({ rpc: provider })
+    this.taquito.setProvider({ rpc: provider });
   }
 
   public async reconcile(op: OperationRequest) {
@@ -28,9 +27,15 @@ export class OperationReconiliatorService {
 
       // TODO: Add caching to call
       const currentBlock = await this.taquito.rpc.getBlock();
-      for (let i = op.emittedAt; i < Math.min(op.emittedAt + 10, currentBlock.header.level); i++) {
+      for (
+        let i = op.emittedAt;
+        i < Math.min(op.emittedAt + 10, currentBlock.header.level);
+        i++
+      ) {
         const block = await this.taquito.rpc.getBlock({ block: String(i) });
-        if (block.operations.some((group) => group.some((op) => op.hash === hash))) {
+        if (
+          block.operations.some((group) => group.some((op) => op.hash === hash))
+        ) {
           found = true;
         }
       }

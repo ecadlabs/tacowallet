@@ -4,13 +4,13 @@ import { AccountService } from './account.service';
 import { OperationStoreService } from './operation-store.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class OperationHandlerService {
   constructor(
     private store: OperationStoreService,
-    private accounts: AccountService,
-  ) { }
+    private accounts: AccountService
+  ) {}
 
   async process(op: OperationRequest) {
     const account = await this.accounts.getCurrentAccount();
