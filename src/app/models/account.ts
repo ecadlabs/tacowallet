@@ -2,7 +2,7 @@ import { TezosToolkit } from '@taquito/taquito';
 import { BehaviorSubject } from 'rxjs';
 import { OperationRequest, OperationResponse } from './operation';
 
-const provider = 'https://api.tez.ie/rpc/babylonnet';
+const provider = 'https://api.tez.ie/rpc/carthagenet';
 
 export interface FaucetKey {
   email: string;
@@ -21,12 +21,12 @@ export class Account {
   public static async createFromFaucet(
     faucet: FaucetKey,
     operationRequest: OperationRequest[] = [],
-    operationResponse: OperationResponse[] = [],
+    operationResponse: OperationResponse[] = []
   ) {
     const { email, password, mnemonic, secret } = faucet;
     const taquito = new TezosToolkit();
     taquito.setProvider({ rpc: provider });
-    await taquito.importKey(email, password, mnemonic.join(" "), secret);
+    await taquito.importKey(email, password, mnemonic.join(' '), secret);
     return new Account(taquito, faucet);
   }
 
@@ -34,9 +34,8 @@ export class Account {
     private taquito: TezosToolkit,
     private faucet: FaucetKey,
     private operationRequest: OperationRequest[] = [],
-    private operationResponse: OperationResponse[] = [],
-  ) {
-  }
+    private operationResponse: OperationResponse[] = []
+  ) {}
 
   async getPKH() {
     return this.taquito.signer.publicKeyHash();
@@ -50,11 +49,17 @@ export class Account {
     // tslint:disable-next-line: no-string-literal no-non-null-assertion
     console.log(op);
 
-    const rpcOps: any = [];// ParamsWithKind[] = [];
+    const rpcOps: any = []; // ParamsWithKind[] = [];
 
     for (const operation of op.ops) {
       if (operation.kind === 'transaction') {
-        rpcOps.push({ kind: 'transaction', to: operation.destination, amount: Number(operation.amount), mutez: true, parameter: operation.parameters })
+        rpcOps.push({
+          kind: 'transaction',
+          to: operation.destination,
+          amount: Number(operation.amount),
+          mutez: true,
+          parameter: operation.parameters,
+        });
       }
     }
 
@@ -75,14 +80,14 @@ export class Account {
   }
 
   addPermissionRequest(permission: PermissionRequest) {
-    permission.allow()
-    this.permissionRequest.get(permission as any)
+    permission.allow();
+    this.permissionRequest.get(permission as any);
   }
 
   serialize() {
     return {
       faucetKey: this.faucet,
-      operationRequest: this.operationRequest.map((x) => x.serialize())
-    }
+      operationRequest: this.operationRequest.map((x) => x.serialize()),
+    };
   }
 }

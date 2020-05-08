@@ -10,27 +10,33 @@ import { SummaryService } from '../apps-services/summary.service';
 @Component({
   selector: 'app-list',
   templateUrl: 'list.page.html',
-  styleUrls: ['list.page.scss']
+  styleUrls: ['list.page.scss'],
 })
 export class ListPage implements OnInit {
-
-  public txList$: Observable<OperationRequest[]> = this.account.currentAccount$.pipe(switchMap((ac) => {
-    return ac.operationRequest$;
-  }));
+  public txList$: Observable<
+    OperationRequest[]
+  > = this.account.currentAccount$.pipe(
+    switchMap((ac) => {
+      return ac.operationRequest$;
+    })
+  );
 
   constructor(
     private account: AccountService,
-    private opreationApprover: OperationApproverService,
+    private operationApprover: OperationApproverService,
     private summaryService: SummaryService
-  ) {
-  }
+  ) {}
 
   public getStrTemplate(op: any) {
-    return `${op.kind} To: ${op.destination} Amount: ${Tezos.format('mutez', 'tz', op.amount).toString()} tz`
+    return `${op.kind} To: ${op.destination} Amount: ${Tezos.format(
+      'mutez',
+      'tz',
+      op.amount
+    ).toString()} tz`;
   }
 
   async showSummary(op: OperationRequest) {
-    this.summaryService.call(op.appID, op.tx)
+    this.summaryService.call(op.appID, op.tx);
   }
 
   hasSummary(op: OperationRequest) {
@@ -38,11 +44,10 @@ export class ListPage implements OnInit {
   }
 
   async approve(op: OperationRequest) {
-    await this.opreationApprover.approve(op);
+    await this.operationApprover.approve(op);
   }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
   // add back when alpha.4 is out
   // navigate(item) {
   //   this.router.navigate(['/list', JSON.stringify(item)]);
