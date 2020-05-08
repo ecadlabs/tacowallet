@@ -45,7 +45,6 @@ export class WalletInteractionService implements WalletInteractionStandard {
           version: message.version,
           beaconId: message.beaconId,
           type: BeaconMessageType.PermissionResponse,
-          accountIdentifier: 'name',
           pubkey: await account.getPK(),
           network: message.network,
           scopes: message.scopes,

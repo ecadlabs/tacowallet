@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
-import { RPCOperation } from '@taquito/taquito/src/operations/types';
 import { OperationRequest } from '../models/operation';
 import { TezosToolkit } from '@taquito/taquito';
-import { Tezos } from '@taquito/taquito/src/taquito';
+import { RPCOperation } from '@taquito/taquito/dist/types/operations/types';
 
 function uuidv4() {
   return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {

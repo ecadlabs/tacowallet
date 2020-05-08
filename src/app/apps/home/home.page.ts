@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { TezosToolkit } from '@taquito/taquito/src/taquito';
+import { TezosToolkit } from '@taquito/taquito';
 
 @Component({
   selector: 'app-home',
