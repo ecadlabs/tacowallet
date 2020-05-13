@@ -33,7 +33,9 @@
                 "glob": "**/*.svg",
                 "input": "node_modules/ionicons/dist/ionicons/svg",
                 "output": "./svg"
-              }
+              },
+              "src/404.html",
+              "src/CNAME"
             ],
             "styles": [
               {
