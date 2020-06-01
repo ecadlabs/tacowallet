@@ -5,36 +5,36 @@ import {
   PermissionRequest as AirgapPermissionRequest,
   OperationResponseInput,
   PermissionResponseInput,
-} from "@airgap/beacon-sdk";
-import { Injectable } from "@angular/core";
-import { defer, NEVER, Observable, ReplaySubject } from "rxjs";
+} from '@airgap/beacon-sdk';
+import { Injectable } from '@angular/core';
+import { defer, NEVER, Observable, ReplaySubject } from 'rxjs';
 import {
   filter,
   first,
   shareReplay,
   switchMap,
   withLatestFrom,
-} from "rxjs/operators";
-import { OperationRequest } from "../../models/operation";
-import { PermissionRequest } from "../../models/permission-request";
-import { AccountService } from "../account.service";
-import { OperationFactoryService } from "../operation-factory.service";
-import { WalletInteractionStandard } from "../operation-listener.service";
+} from 'rxjs/operators';
+import { OperationRequest } from '../../models/operation';
+import { PermissionRequest } from '../../models/permission-request';
+import { AccountService } from '../account.service';
+import { OperationFactoryService } from '../operation-factory.service';
+import { WalletInteractionStandard } from '../operation-listener.service';
 
 @Injectable({
-  providedIn: "root",
+  providedIn: 'root',
 })
 export class WalletInteractionService implements WalletInteractionStandard {
   constructor(
     private accounts: AccountService,
-    private factory: OperationFactoryService,
+    private factory: OperationFactoryService
   ) {}
 
   private paired = new ReplaySubject(1);
   public message$ = new ReplaySubject(1);
 
   private client$ = defer(async () => {
-    const client = new WalletClient({ name: "test" });
+    const client = new WalletClient({ name: 'test' });
     await client.init();
     await client.connect(async (message: AirgapPermissionRequest) => {
       if (message.type === BeaconMessageType.PermissionRequest) {
@@ -42,7 +42,7 @@ export class WalletInteractionService implements WalletInteractionStandard {
         const response: PermissionResponseInput = {
           id: message.id,
           type: BeaconMessageType.PermissionResponse,
-          pubkey: await account.getPK(),
+          publicKey: await account.getPK(),
           network: message.network,
           scopes: message.scopes,
         };
@@ -59,7 +59,7 @@ export class WalletInteractionService implements WalletInteractionStandard {
     filter((x: any) => x.type === BeaconMessageType.OperationRequest),
     withLatestFrom(this.client$),
     switchMap(async ([x, client]: [AirgapOperationRequest, WalletClient]) => {
-      const op = await this.factory.create(x.operationDetails as any, "test");
+      const op = await this.factory.create(x.operationDetails as any, 'test');
       op.response$.subscribe(async ({ hash }) => {
         const response: OperationResponseInput = {
           id: x.id,
@@ -69,23 +69,21 @@ export class WalletInteractionService implements WalletInteractionStandard {
         await client.respond(response);
       });
       return op;
-    }),
+    })
   );
 
   public pair(pairingStr: string) {
     return this.client$
       .pipe(
         switchMap(async (client) => {
-          await client.addPeer(
-            {
-              name: "test",
-              pubKey: pairingStr,
-              relayServer: "matrix.papers.tech",
-            } as any,
-          );
+          await client.addPeer({
+            name: 'test',
+            publicKey: pairingStr,
+            relayServer: 'matrix.papers.tech',
+          } as any);
           this.paired.next(true);
         }),
-        first(),
+        first()
       )
       .toPromise();
   }
