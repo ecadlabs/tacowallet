@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { first, map } from 'rxjs/operators';
 import { Account, FaucetKey } from '../models/account';
 import { OperationStoreService } from './operation-store.service';
@@ -31,4 +31,9 @@ export class AccountService {
   async createAccount(faucetKey: FaucetKey) {
     this.store.replaceAccount(await Account.createFromFaucet(faucetKey));
   }
+
+  async importFaucet() {
+    this.store.importFaucet();
+  }
 }
+

@@ -9,7 +9,6 @@ import { map, filter, switchMap, withLatestFrom } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { Router, NavigationEnd, Event } from '@angular/router';
 import { AccountService } from './services/account.service';
-import { FaucetKeyModalComponent } from './faucet-key-modal/faucet-key-modal.component';
 
 @Component({
   selector: 'app-root',
@@ -69,10 +68,7 @@ export class AppComponent {
   }
 
   async showWalletModal() {
-    const modal = await this.modalController.create({
-      component: FaucetKeyModalComponent,
-    });
-    return modal.present();
+    this.accounts.importFaucet();
   }
 
   initializeApp() {
