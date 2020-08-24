@@ -49,10 +49,10 @@ export class OperationStoreService {
         const accountFromFaucet = await this.createAccount(JSON.parse(data));
         this._accounts$.next([accountFromFaucet]);
         this.persists(accountFromFaucet);
-    } catch (ex) {
-    } finally {
-      loading.dismiss();
-    }
+      } catch (ex) {
+      } finally {
+        loading.dismiss();
+      }
     } else {
       const accountSubject = new ReplaySubject<Account[]>(1);
       this._accounts$ = accountSubject;
@@ -99,11 +99,10 @@ export class OperationStoreService {
     loading.present();
     try {
       this.replaceAccount(await Account.createFromFaucet(JSON.parse(data)));
-  } catch (ex) {
-    console.log(ex)
-  } finally {
-    loading.dismiss();
-  }
+    } catch (ex) {
+    } finally {
+      loading.dismiss();
+    }
   }
 
 }
