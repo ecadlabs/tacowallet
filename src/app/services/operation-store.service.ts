@@ -1,35 +1,12 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, Subject, defer, from, ReplaySubject } from 'rxjs';
+import { Observable, Subject, defer, from, ReplaySubject } from 'rxjs';
 import { Account, FaucetKey } from '../models/account';
 import { OperationFactoryService } from './operation-factory.service';
 import { OperationRequest } from '../models/operation';
 import { OperationReconiliatorService } from './operation-reconiliator.service';
-import { first, switchMapTo, shareReplay, switchMap } from 'rxjs/operators';
-
-const defaultFaucet = {
-  "mnemonic": [
-    "choose",
-    "gravity",
-    "enough",
-    "noble",
-    "license",
-    "video",
-    "rate",
-    "soul",
-    "mansion",
-    "moment",
-    "fruit",
-    "runway",
-    "cousin",
-    "script",
-    "helmet"
-  ],
-  "secret": "6f054c9a91a6a44a7913d95a334bf81a8eef996b",
-  "amount": "49132958262",
-  "pkh": "tz1ZgmtH7SbhWmrSk6cpywkwh2uhncn9YgeA",
-  "password": "6qfyf2ZtW6",
-  "email": "ivscxswy.kntpubez@tezos.example.org"
-}
+import { first, shareReplay, switchMap } from 'rxjs/operators';
+import {  ModalController, LoadingController } from '@ionic/angular';
+import { FaucetKeyModalComponent } from './../faucet-key-modal/faucet-key-modal.component';
 
 @Injectable({
   providedIn: 'root'
@@ -48,7 +25,9 @@ export class OperationStoreService {
 
   constructor(
     private factory: OperationFactoryService,
-    private reconciliator: OperationReconiliatorService
+    private reconciliator: OperationReconiliatorService,
+    private modalController: ModalController,
+    private loadingCtrl: LoadingController
   ) {
 
   }
@@ -56,7 +35,24 @@ export class OperationStoreService {
   private async loadInitialState() {
     const accounts = localStorage.getItem('accounts');
     if (!accounts) {
-      this._accounts$ = new BehaviorSubject([await this.createAccount(defaultFaucet)]);
+      this._accounts$ = new ReplaySubject(); 
+      const modal = await this.modalController.create({
+        component: FaucetKeyModalComponent,
+      });
+      await modal.present();
+      const {data} = await modal.onDidDismiss();
+      const loading = await this.loadingCtrl.create({
+        message: 'Activating faucet key'
+      });
+      loading.present();
+      try {
+        const accountFromFaucet = await this.createAccount(JSON.parse(data));
+        this._accounts$.next([accountFromFaucet]);
+        this.persists(accountFromFaucet);
+      } catch (ex) {
+      } finally {
+        loading.dismiss();
+      }
     } else {
       const accountSubject = new ReplaySubject<Account[]>(1);
       this._accounts$ = accountSubject;
@@ -89,6 +85,24 @@ export class OperationStoreService {
 
   replaceAccount(account: Account) {
     this.persists(account);
+  }
+
+  async importFaucet() {
+    const modal = await this.modalController.create({
+      component: FaucetKeyModalComponent,
+    });
+    await modal.present();
+    const {data} = await modal.onDidDismiss();
+    const loading = await this.loadingCtrl.create({
+      message: 'Activating faucet key'
+    });
+    loading.present();
+    try {
+      this.replaceAccount(await Account.createFromFaucet(JSON.parse(data)));
+    } catch (ex) {
+    } finally {
+      loading.dismiss();
+    }
   }
 
 }
