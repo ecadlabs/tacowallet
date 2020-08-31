@@ -13,20 +13,12 @@ export class OriginationComponent implements OnInit {
   @Input()
   operation: any;
 
-  //public fees: String = "Estimating fees...";
-
   constructor(
     private op: OperationHandlerService,
     ) { }
 
   async ngOnInit() {
-    //this.estimateFee();
-    
   }
-/*   async estimateFee() {
-    const estimate = await this.op.estimateOperation(this.operation)
-    this.fees = estimate[0].suggestedFeeMutez.toString() + " mutez";
-  } */
 
   format(amount: string) {
     return Tezos.format('mutez', 'tz', amount)
