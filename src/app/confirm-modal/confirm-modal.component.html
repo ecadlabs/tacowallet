@@ -9,6 +9,7 @@
     <app-origination *ngIf="i.kind === 'origination'" [operation]="i"></app-origination>
     <div *ngIf='loading'><strong>Estimated fees: </strong> <ion-spinner *ngIf='loading' name="crescent"></ion-spinner></div>
     <div *ngIf='!loading'><strong>Estimated fees:</strong> {{getEstimatedFee(x)}}</div>
+    <br>
   </div>
 </ion-text>
 <br>

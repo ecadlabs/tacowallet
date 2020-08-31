@@ -1,14 +1,14 @@
 :host {
-        white-space: pre;
+  white-space: pre;
         
-        pre code {
-            background-color: #eee;
-            border: 1px solid #999;
-            overflow: auto;
-          }
-          pre > code {
-            display: block;
-            padding: 1rem;
-            word-wrap: normal;
-          }
+  pre code {
+    background-color: #eee;
+    border: 1px solid #999;
+    overflow: auto;
+  }
+  pre > code {
+    display: block;
+    padding: 1rem;
+    word-wrap: normal;
+  }
 }
