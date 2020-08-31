@@ -1,7 +1,16 @@
-<p>
-  {{format(opRequest.ops[0].amount)}} tz
-</p>
-<p>
-  {{opRequest.ops[0].destination}}
-</p>
+<ion-title class='title'>
+  Details of the operation:
+</ion-title>
+<br>
+<ion-text class='details'>
+  <strong>Dapp name:</strong> {{this.opRequest.appID}}
+  <div *ngFor="let i of opRequest.ops, index as x">
+    <app-transfer *ngIf="i.kind === 'transaction'" [operation]="i"></app-transfer>
+    <app-origination *ngIf="i.kind === 'origination'" [operation]="i"></app-origination>
+    <div *ngIf='loading'><strong>Estimated fees: </strong> <ion-spinner *ngIf='loading' name="crescent"></ion-spinner></div>
+    <div *ngIf='!loading'><strong>Estimated fees:</strong> {{getEstimatedFee(x)}}</div>
+    <br>
+  </div>
+</ion-text>
+<br>
 <ion-button (click)='confirm()' color="primary">Confirm</ion-button>

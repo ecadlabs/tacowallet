@@ -1,8 +1,8 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Inject } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { OperationHandlerService } from '../services/operation-handler.service';
 import { OperationRequest } from '../models/operation';
-import { Tezos } from '@taquito/taquito';
+import { Estimate } from '@taquito/taquito/dist/types/contract/estimate';
 
 @Component({
   selector: 'app-confirm-modal',
@@ -12,12 +12,22 @@ import { Tezos } from '@taquito/taquito';
 export class ConfirmModalComponent implements OnInit {
 
   @Input()
-  opRequest: any;
+  opRequest: OperationRequest;
 
-  constructor(private modalCtrl: ModalController, private op: OperationHandlerService) { }
+  public estimate: Estimate[];
+  loading: boolean = true;
+  
+  constructor(
+    private modalCtrl: ModalController, 
+    private op: OperationHandlerService,
+    @Inject('SummaryFunc')
+    private summaryFunc: any
+    ) { }
 
-  ngOnInit() {
-    console.log(this.opRequest)
+  async ngOnInit() {  
+    this.loading = true;
+    await this.estimateFee(); 
+    this.loading = false;
   }
 
   async confirm() {
@@ -26,10 +36,19 @@ export class ConfirmModalComponent implements OnInit {
         'dismissed': true
       });
       await this.op.process(this.opRequest);
+      await this.summaryFunc(this.opRequest);
     }
   }
 
-  format(amount: string) {
-    return Tezos.format('mutez', 'tz', amount)
+  getOpType(i : number) {
+    return this.opRequest.ops[i].kind;
+  }
+
+  async estimateFee() {
+    this.estimate = await this.op.estimateOperation(this.opRequest);
+  }
+
+  getEstimatedFee(x: number) {
+    return this.estimate[x].suggestedFeeMutez.toString() + " mutez";
   }
 }

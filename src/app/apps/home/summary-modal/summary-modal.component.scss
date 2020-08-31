@@ -1,0 +1,15 @@
+:host {
+    padding: 20px;
+    .title{
+        text-align: center;
+        font-weight: bolder;
+    }
+
+    .summary{
+        height: 100%;
+        padding: 30px;
+        box-shadow:  1px 1px 7px 3px #B3B5E6;
+        line-height: 200%;
+        overflow: auto;
+    }  
+}

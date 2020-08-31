@@ -17,8 +17,11 @@ export class SummaryModalComponent implements OnInit {
 
   async ngOnInit() {
     this.loading = true;
-    await this.op.confirmation();
-    this.loading = false;
+    this.op.onStatusChanged$.subscribe(() => {
+      if( this.op.status === 'completed'){
+        this.loading = false;
+      }
+    });
   }
 
 }
