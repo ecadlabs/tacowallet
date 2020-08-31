@@ -6,21 +6,20 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { ConfirmModalComponent } from './confirm-modal/confirm-modal.component';
 import { WalletInteractionService } from './services/operation-request-source/wallet-interaction.service';
 import { OperationRequestService } from './services/operation-request-source/operation-request.service';
 import { FaucetKeyModalComponent } from './faucet-key-modal/faucet-key-modal.component';
-import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-
-
+import { FormsModule } from '@angular/forms';
+import { ConfirmModalModule } from './confirm-modal/confirm-modal.module';
 
 @NgModule({
-  declarations: [AppComponent, ConfirmModalComponent, FaucetKeyModalComponent],
-  entryComponents: [ConfirmModalComponent, FaucetKeyModalComponent],
+  declarations: [AppComponent, FaucetKeyModalComponent],
+  entryComponents: [FaucetKeyModalComponent],
   imports: [
     BrowserModule,
     IonicModule.forRoot(),
     AppRoutingModule,
+    ConfirmModalModule,
     FormsModule,
   ],
   providers: [

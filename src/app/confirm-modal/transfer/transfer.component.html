@@ -1,0 +1,7 @@
+<div><strong>To address:</strong> {{this.operation.destination}}</div>
+<div *ngIf="this.operation.sourceAddress"><strong>From address:</strong>{{this.operation.sourceAddress}}</div>
+<div *ngIf="this.operation.amount"><strong>Amount:</strong> {{format(this.operation.amount)}} ꜩ</div>
+<div *ngIf="this.operation.parameters"><strong>Entrypoint name:</strong> {{prettyPrint(this.operation.parameters.entrypoint)}}</div>
+<div *ngIf="this.operation.parameters"><strong>Values:</strong> {{prettyPrint(this.operation.parameters.value)}}</div>
+
+ 

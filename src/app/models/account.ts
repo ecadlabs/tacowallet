@@ -1,8 +1,11 @@
 import { TezosToolkit } from '@taquito/taquito';
 import { BehaviorSubject } from 'rxjs';
 import { OperationRequest, OperationResponse } from './operation';
+import { Estimate } from '@taquito/taquito/dist/types/contract/estimate';
+import { RPCOperation } from '@taquito/taquito/dist/types/operations/types';
 
 const provider = 'https://api.tez.ie/rpc/carthagenet';
+const TEZTOMUTEZ = 1000000;
 
 export interface FaucetKey {
   email: string;
@@ -34,7 +37,7 @@ export class Account {
     private taquito: TezosToolkit,
     private faucet: FaucetKey,
     private operationRequest: OperationRequest[] = [],
-    private operationResponse: OperationResponse[] = []
+    private operationResponse: OperationResponse[] = [],
   ) {}
 
   async getPKH() {
@@ -49,8 +52,16 @@ export class Account {
     // tslint:disable-next-line: no-string-literal no-non-null-assertion
     console.log(op);
 
-    const rpcOps: any = []; // ParamsWithKind[] = [];
+    let rpcOps: any = []; // ParamsWithKind[] = [];
+    rpcOps = this.prepareOpByType(rpcOps, op);
+    const opTx = await (await this.taquito).batch(rpcOps).send();
+    const opRes = { id: op.id, hash: opTx.hash };
+    this.operationResponse.push(opRes);
+    op.setResponse(opRes, opTx);
+    return opRes;
+  }
 
+  prepareOpByType(rpcOps: any, op: OperationRequest) {
     for (const operation of op.ops) {
       if (operation.kind === 'transaction') {
         rpcOps.push({
@@ -60,14 +71,23 @@ export class Account {
           mutez: true,
           parameter: operation.parameters,
         });
+      } else if (operation.kind === 'origination') {
+        rpcOps.push({
+          kind: 'origination',
+          balance: Number(operation.balance)/TEZTOMUTEZ,
+          init: operation.script.storage,
+          code: operation.script.code
+        })
       }
-    }
+  }
+    return rpcOps;
+  }
 
-    const opTx = await (await this.taquito).batch(rpcOps).send();
-    const opRes = { id: op.id, hash: opTx.hash };
-    this.operationResponse.push(opRes);
-    op.setResponse(opRes, opTx);
-    return opRes;
+  async estimateOperation(operation: OperationRequest): Promise<Estimate[]> {
+    let rpcOps: any = [];
+    rpcOps = this.prepareOpByType(rpcOps, operation);
+    const estimate = await this.taquito.estimate.batch(rpcOps);
+    return estimate
   }
 
   addOperationRequest(op: OperationRequest) {

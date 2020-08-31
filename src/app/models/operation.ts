@@ -49,7 +49,7 @@ export class OperationRequest {
       ops: this.ops,
       emittedAt: this.emittedAt,
       status: this.status,
-      response: this.response,
+      response: this.response
     };
   }
 }

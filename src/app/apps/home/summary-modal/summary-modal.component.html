@@ -1,2 +1,11 @@
+<ion-title class='title'>
+    Summary
+</ion-title>
+<br>
+<ion-text class='summary'>
 <ion-spinner *ngIf='loading' name="crescent"></ion-spinner>
-<p *ngIf='!loading'>Completed</p>
+<p *ngIf='loading'>Waiting for {{this.op.response.hash}} to be confirmed...</p>
+<p *ngIf='!loading'>Operation injected: 
+<a href="https://carthagenet.tzstats.com/{{this.op.response.hash}}" target="_blank">https://carthagenet.tzstats.com/{{this.op.response.hash}}</a>
+</p>
+</ion-text>

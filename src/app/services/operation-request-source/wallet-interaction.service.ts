@@ -59,7 +59,8 @@ export class WalletInteractionService implements WalletInteractionStandard {
     filter((x: any) => x.type === BeaconMessageType.OperationRequest),
     withLatestFrom(this.client$),
     switchMap(async ([x, client]: [AirgapOperationRequest, WalletClient]) => {
-      const op = await this.factory.create(x.operationDetails as any, 'test');
+      const appMetadata: any = x;
+      const op = await this.factory.create(x.operationDetails as any, appMetadata.appMetadata.name);
       op.response$.subscribe(async ({ hash }) => {
         const response: OperationResponseInput = {
           id: x.id,

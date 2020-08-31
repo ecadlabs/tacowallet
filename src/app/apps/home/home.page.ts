@@ -24,7 +24,6 @@ export class HomePage implements OnInit {
   async send() {
     const taquito = await this.taquito;
     const op = await taquito.wallet.transfer({ amount: Number(this.amount), to: this.destination }).send();
-    await this.summaryFunc(op);
   }
 
 }
