@@ -91,7 +91,7 @@ export class ListPage implements OnInit {
       `,
         })
         .valueChanges.subscribe((result: any) => {
-          this.transactions = result?.data?.account?.transactions;
+          this.transactions = result.data.account.transactions;
         });
     });
   }
