@@ -1,21 +1,69 @@
 <ion-list>
   <ion-item *ngFor="let item of txList$ | async">
-    <ion-icon *ngIf='item.status === "need_approval"' name="information-circle-outline" slot="start"></ion-icon>
-    <ion-spinner *ngIf='item.status === "pending"' slot="start" name="dots"></ion-spinner>
-    <ion-icon *ngIf='item.status === "completed"' name="checkmark-circle-outline" slot="start"></ion-icon>
-    <ion-label>
-      <ion-list lines='none'>
-        <ion-item *ngFor="let op of item.ops">
-          {{getStrTemplate(op)}}
-        </ion-item>
-      </ion-list>
-    </ion-label>
-    <ion-button *ngIf='item.status === "need_approval"' (click)='approve(item)'>Approve</ion-button>
-    <ion-button *ngIf='item.status === "pending" && hasSummary(item)' (click)='showSummary(item)'>Show</ion-button>
+    <ion-item *ngFor="let op of item.ops" class="transactionItem"
+      href="https://carthagenet.tzstats.com/{{item.response.hash}}">
+      <ion-icon *ngIf='item.status === "need_approval"' name="information-circle-outline" slot="start"></ion-icon>
+      <ion-spinner *ngIf='item.status === "pending"' slot="start" name="dots"></ion-spinner>
+      <ion-icon *ngIf='item.status === "completed"' name="checkmark-circle-outline" slot="start"></ion-icon>
+      <ion-grid>
+        <ion-row>
+          <ion-col size="10" size-sm="10">
+            <ion-note color="primary">
+              {{op.destination}}
+            </ion-note>
+            <br>
+            <br>
+            <ion-note color="Dark">{{getFormatedDate(todayDate)}}</ion-note>
+            <br> {{op.kind}}
+            <br>
+            <ion-note>Gas:{{op.fee}}</ion-note>
+          </ion-col>
+          <ion-col class="ion-align-self-end">
+            <ion-note color="success">
+              {{getTransactionAmount(op.amount)}}
+            </ion-note>
+            <br>
+            <ion-button *ngIf='item.status === "need_approval"' (click)='approve(item)'>
+              Approve
+            </ion-button>
+            <ion-button *ngIf='item.status === "pending" && hasSummary(item)' (click)='showSummary(item)'>
+              Show
+            </ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-item>
+  </ion-item>
+  <ion-item *ngFor="let transaction of transactions" class='transactionItem'
+    href="https://carthagenet.tzstats.com/{{transaction.hash}}">
+    <ion-icon name="checkmark-circle-outline" slot="start"></ion-icon>
+    <ion-grid>
+      <ion-row>
+        <ion-col size="10" size-sm="10">
+          <ion-note *ngIf='transaction.source !== currentPKH' color="primary">
+            {{transaction.source}}
+          </ion-note>
+          <ion-note *ngIf='transaction.source === currentPKH' color="primary">
+            {{transaction.destination}}
+          </ion-note>
+          <br>
+          <ion-note *ngIf='transaction.source !== currentPKH' color="success">
+            <ion-icon name="information-circle-outline" slot="start"></ion-icon>
+          </ion-note>
+          <br>
+          <ion-note color="Dark">{{getFormatedDate(transaction.timestamp)}}</ion-note>
+          <br> {{transaction.type}}
+          <ion-note>Gas:{{transaction.gas}}</ion-note>
+        </ion-col>
+        <ion-col class="ion-align-self-center">
+          <ion-note *ngIf='transaction.source !== currentPKH' color="success">
+            {{getTransactionAmount(transaction.amount)}}
+          </ion-note>
+          <ion-note *ngIf='transaction.source === currentPKH' color="danger">
+            {{getTransactionAmount(transaction.amount)}}
+          </ion-note>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
   </ion-item>
 </ion-list>
-<!--
-    <div *ngIf="selectedItem" padding>
-      You navigated here from <b>{{selectedItem.title }}</b>
-    </div>
-  -->
