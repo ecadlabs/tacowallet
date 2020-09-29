@@ -19,5 +19,5 @@
     "strictInjectionParameters": true,
     "disableTypeScriptVersionCheck": true
   },
-  "allowSyntheticDefaultImports": true
+  "allowSyntheticDefaultImports": false
 }

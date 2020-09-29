@@ -26,18 +26,17 @@
     "@ionic-native/status-bar": "^5.28.0",
     "@ionic/angular": "^5.3.1",
     "@taquito/taquito": "^6.3.5-beta.0",
-    "apollo-angular": "^2.0.2",
+    "apollo-angular": "^2.0.4",
     "apollo-angular-link-http": "^1.11.0",
     "apollo-cache-inmemory": "^1.6.6",
+    "apollo-client": "^2.6.10",
     "apollo-link": "^1.2.14",
-    "apollo-link-rest": "0.7.3",
     "core-js": "^3.6.5",
     "graphql": "^15.3.0",
-    "graphql-anywhere": "^4.2.7",
     "graphql-tag": "^2.11.0",
     "matrix-js-sdk": "^6.2.2",
     "rxjs": "~6.5.5",
-    "tslib": "^1.13.0",
+    "tslib": "^2.0.1",
     "zone.js": "~0.10.3"
   },
   "devDependencies": {
@@ -66,7 +65,7 @@
     "protractor": "~7.0.0",
     "ts-node": "~8.10.2",
     "tslint": "^6.1.3",
-    "typescript": "^3.6.5"
+    "typescript": "^3.9.7"
   },
   "description": "Taco wallet"
 }
