@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { OperationHandlerService } from 'src/app/services/operation-handler.service';
-import { Tezos } from '@taquito/taquito';
+import { TezosToolkit } from '@taquito/taquito';
 import { Parser, emitMicheline } from '@taquito/michel-codec';
 
 @Component({
@@ -21,6 +21,7 @@ export class OriginationComponent implements OnInit {
   }
 
   format(amount: string) {
+    const Tezos = new TezosToolkit('https://api.tez.ie/rpc/carthagenet');
     return Tezos.format('mutez', 'tz', amount)
   }
 

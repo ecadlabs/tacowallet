@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Tezos } from '@taquito/taquito';
+import { TezosToolkit } from '@taquito/taquito';
 import { Observable } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { OperationRequest } from '../models/operation';
@@ -28,6 +28,7 @@ export class ListPage implements OnInit {
   ) {}
 
   public getStrTemplate(op: any) {
+    const Tezos = new TezosToolkit('https://api.tez.ie/rpc/carthagenet');
     return `${op.kind} To: ${op.destination} Amount: ${Tezos.format(
       'mutez',
       'tz',
