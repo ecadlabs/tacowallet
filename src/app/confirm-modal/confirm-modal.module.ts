@@ -15,28 +15,7 @@ const APP_ID = 'test';
   imports: [
     IonicModule,
     CommonModule
-  ],
-  providers: [
-    {
-      provide: 'SummaryFunc',
-      useFactory: (modalController: ModalController) => async (op: any) => {
-        const modal = await modalController.create({
-          component: SummaryModalComponent,
-          componentProps: {
-            op,
-          },
-        });
-        return modal.present();
-      },
-      deps: [ModalController],
-    },
   ]
 })
 export class ConfirmModalModule {
-constructor(
-  summary: SummaryService,
-  @Inject('SummaryFunc') summaryFunc: any
-  ){
-    summary.registerCb(APP_ID, summaryFunc);
-  }
 }

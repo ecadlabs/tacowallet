@@ -3,9 +3,9 @@
 </ion-title>
 <br>
 <ion-text class='summary'>
-<ion-spinner *ngIf='loading' name="crescent"></ion-spinner>
-<p *ngIf='loading'>Waiting for {{this.op.response.hash}} to be confirmed...</p>
-<p *ngIf='!loading'>Operation injected: 
+<ion-spinner *ngIf='loading | async' name="crescent"></ion-spinner>
+<p *ngIf='loading | async '>Waiting for {{this.op.response.hash}} to be confirmed...</p>
+<p *ngIf='!(loading | async)'>Operation injected: 
 <a href="https://carthagenet.tzstats.com/{{this.op.response.hash}}" target="_blank">https://carthagenet.tzstats.com/{{this.op.response.hash}}</a>
 </p>
 </ion-text>

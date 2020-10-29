@@ -3,6 +3,7 @@ import { ModalController } from '@ionic/angular';
 import { OperationHandlerService } from '../services/operation-handler.service';
 import { OperationRequest } from '../models/operation';
 import { Estimate } from '@taquito/taquito/dist/types/contract/estimate';
+import { SummaryService } from '../apps-services/summary.service';
 
 @Component({
   selector: 'app-confirm-modal',
@@ -20,8 +21,7 @@ export class ConfirmModalComponent implements OnInit {
   constructor(
     private modalCtrl: ModalController, 
     private op: OperationHandlerService,
-    @Inject('SummaryFunc')
-    private summaryFunc: any
+    private summaryService: SummaryService,
     ) { }
 
   async ngOnInit() {  
@@ -36,7 +36,7 @@ export class ConfirmModalComponent implements OnInit {
         'dismissed': true
       });
       await this.op.process(this.opRequest);
-      await this.summaryFunc(this.opRequest);
+      await this.summaryService.call(this.opRequest.appID, this.opRequest);
     }
   }
 

@@ -36,7 +36,7 @@ export class ListPage implements OnInit {
   }
 
   async showSummary(op: OperationRequest) {
-    this.summaryService.call(op.appID, op.tx);
+    this.summaryService.call(op.appID, op);
   }
 
   hasSummary(op: OperationRequest) {

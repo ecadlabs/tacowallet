@@ -10,6 +10,7 @@ import { SummaryService } from '../../apps-services/summary.service';
 import { TaquitoService } from '../../apps-services/taquito.service';
 import { MenuService } from '../../apps-services/menu.service';
 import { MenuService as ChildMenu } from './menu.service';
+import { OperationRequest } from 'src/app/models/operation';
 
 const APP_ID = 'test';
 
@@ -39,7 +40,7 @@ const APP_ID = 'test';
     },
     {
       provide: 'SummaryFunc',
-      useFactory: (modalController: ModalController) => async (op: any) => {
+      useFactory: (modalController: ModalController) => async (op: OperationRequest) => {
         const modal = await modalController.create({
           component: SummaryModalComponent,
           componentProps: {

@@ -1,4 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { Observable } from 'rxjs';
+import { map, startWith } from 'rxjs/operators';
+import { OperationRequest } from 'src/app/models/operation';
 // import { Operation } from '../../../../../packages/taquito/dist/types/operations/operations';
 
 @Component({
@@ -9,19 +12,19 @@ import { Component, OnInit, Input } from '@angular/core';
 export class SummaryModalComponent implements OnInit {
 
   @Input()
-  op: any;
+  op: OperationRequest;
 
-  loading: boolean = true;
+  loading: Observable<boolean>;
 
   constructor() { }
 
   async ngOnInit() {
-    this.loading = true;
-    this.op.onStatusChanged$.subscribe(() => {
-      if( this.op.status === 'completed'){
-        this.loading = false;
-      }
-    });
+    this.loading = this.op.onStatusChanged$.pipe(
+      map(() => {
+        return this.op.status !== 'completed'
+      }),
+      startWith(true)
+      )
   }
 
 }
