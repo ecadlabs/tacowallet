@@ -8,11 +8,7 @@ const provider = 'https://api.tez.ie/rpc/carthagenet';
   providedIn: 'root',
 })
 export class OperationReconiliatorService {
-  private taquito = new TezosToolkit();
-
-  constructor() {
-    this.taquito.setProvider({ rpc: provider });
-  }
+  private taquito = new TezosToolkit(provider);
 
   public async reconcile(op: OperationRequest) {
     if (op.status === OperationRequestStatus.PENDING) {

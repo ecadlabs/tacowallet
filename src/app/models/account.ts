@@ -3,6 +3,7 @@ import { BehaviorSubject } from 'rxjs';
 import { OperationRequest, OperationResponse } from './operation';
 import { Estimate } from '@taquito/taquito/dist/types/contract/estimate';
 import { RPCOperation } from '@taquito/taquito/dist/types/operations/types';
+import { importKey } from "@taquito/signer";
 
 const provider = 'https://api.tez.ie/rpc/carthagenet';
 const TEZTOMUTEZ = 1000000;
@@ -27,9 +28,8 @@ export class Account {
     operationResponse: OperationResponse[] = []
   ) {
     const { email, password, mnemonic, secret } = faucet;
-    const taquito = new TezosToolkit();
-    taquito.setProvider({ rpc: provider });
-    await taquito.importKey(email, password, mnemonic.join(' '), secret);
+    const taquito = new TezosToolkit(provider);
+    await importKey(taquito, email, password, mnemonic.join(' '), secret);
     return new Account(taquito, faucet);
   }
 
