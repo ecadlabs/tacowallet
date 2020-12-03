@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { WalletInteractionService } from '../services/operation-request-source/wallet-interaction.service';
+import * as bs58check from 'bs58check';
 
 @Component({
   selector: 'app-pair',
@@ -18,6 +19,7 @@ export class PairPage implements OnInit {
   }
 
   pair() {
-    this.walletInteraction.pair(this.pairingStr);
+    const decoded = JSON.parse(bs58check.decode(this.pairingStr).toString());
+    this.walletInteraction.pair(decoded.publicKey);
   }
 }

@@ -5,6 +5,7 @@ import {
   PermissionRequest as AirgapPermissionRequest,
   OperationResponseInput,
   PermissionResponseInput,
+  BEACON_VERSION
 } from '@airgap/beacon-sdk';
 import { Injectable } from '@angular/core';
 import { defer, NEVER, Observable, ReplaySubject } from 'rxjs';
@@ -34,7 +35,7 @@ export class WalletInteractionService implements WalletInteractionStandard {
   public message$ = new ReplaySubject(1);
 
   private client$ = defer(async () => {
-    const client = new WalletClient({ name: 'test' });
+    const client = new WalletClient({ name: 'Taco Wallet' });
     await client.init();
     await client.connect(async (message: AirgapPermissionRequest) => {
       if (message.type === BeaconMessageType.PermissionRequest) {
@@ -78,7 +79,8 @@ export class WalletInteractionService implements WalletInteractionStandard {
       .pipe(
         switchMap(async (client) => {
           await client.addPeer({
-            name: 'test',
+            name: 'Taco Wallet',
+            version: BEACON_VERSION,
             publicKey: pairingStr,
             relayServer: 'matrix.papers.tech',
           } as any);

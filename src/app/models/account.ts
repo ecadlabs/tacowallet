@@ -50,7 +50,6 @@ export class Account {
 
   async process(op: OperationRequest): Promise<OperationResponse> {
     // tslint:disable-next-line: no-string-literal no-non-null-assertion
-    console.log(op);
 
     let rpcOps: any = []; // ParamsWithKind[] = [];
     rpcOps = this.prepareOpByType(rpcOps, op);
