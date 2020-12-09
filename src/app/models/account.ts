@@ -5,7 +5,7 @@ import { Estimate } from '@taquito/taquito/dist/types/contract/estimate';
 import { RPCOperation } from '@taquito/taquito/dist/types/operations/types';
 import { importKey } from "@taquito/signer";
 
-const provider = 'https://api.tez.ie/rpc/carthagenet';
+const provider = 'https://api.tez.ie/rpc/delphinet';
 const TEZTOMUTEZ = 1000000;
 
 export interface FaucetKey {

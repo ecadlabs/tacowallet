@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { OperationRequest, OperationRequestStatus } from '../models/operation';
 import { TezosToolkit } from '@taquito/taquito';
 
-const provider = 'https://api.tez.ie/rpc/carthagenet';
+const provider = 'https://api.tez.ie/rpc/delphinet';
 
 @Injectable({
   providedIn: 'root',

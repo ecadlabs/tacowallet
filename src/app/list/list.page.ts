@@ -28,7 +28,7 @@ export class ListPage implements OnInit {
   ) {}
 
   public getStrTemplate(op: any) {
-    const Tezos = new TezosToolkit('https://api.tez.ie/rpc/carthagenet');
+    const Tezos = new TezosToolkit('https://api.tez.ie/rpc/delphinet');
     return `${op.kind} To: ${op.destination} Amount: ${Tezos.format(
       'mutez',
       'tz',

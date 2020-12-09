@@ -50,7 +50,7 @@ export class TaquitoService {
     const account = await this.account.currentAccount$
       .pipe(first())
       .toPromise();
-    const taquito = new TezosToolkit('https://api.tez.ie/rpc/carthagenet');
+    const taquito = new TezosToolkit('https://api.tez.ie/rpc/delphinet');
     taquito.setProvider({
       wallet: new InternalWallet(await account.getPKH(), this.opRequest),
     });

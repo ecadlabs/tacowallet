@@ -22,7 +22,7 @@ export class TransferComponent implements OnInit {
   }
 
   format(amount: string) {
-    const Tezos = new TezosToolkit('https://api.tez.ie/rpc/carthagenet');
+    const Tezos = new TezosToolkit('https://api.tez.ie/rpc/delphinet');
     return Tezos.format('mutez', 'tz', amount);
   }
 
