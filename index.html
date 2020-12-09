@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <title>Taco wallet</title>
+
+  <base href="/" />
+
+  <meta name="viewport"
+    content="viewport-fit=cover, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="format-detection" content="telephone=no" />
+  <meta name="msapplication-tap-highlight" content="no" />
+
+  <link rel="icon" type="image/png" href="assets/icon/favicon.png" />
+
+  <!-- add to homescreen for ios -->
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+<link rel="stylesheet" href="styles.d790b8a0a13d0a4f5dd3.css"></head>
+
+<script type="text/javascript">
+  // Single Page Apps for GitHub Pages
+  // https://github.com/rafrex/spa-github-pages
+  // Copyright (c) 2016 Rafael Pedicini, licensed under the MIT License
+  // ----------------------------------------------------------------------
+  // This script checks to see if a redirect is present in the query string
+  // and converts it back into the correct url and adds it to the
+  // browser's history using window.history.replaceState(...),
+  // which won't cause the browser to attempt to load the new url.
+  // When the single page app is loaded further down in this file,
+  // the correct url will be waiting in the browser's history for
+  // the single page app to route accordingly.
+  (function(l) {
+    if (l.search) {
+      var q = {};
+      l.search.slice(1).split('&').forEach(function(v) {
+        var a = v.split('=');
+        q[a[0]] = a.slice(1).join('=').replace(/~and~/g, '&');
+      });
+      if (q.p !== undefined) {
+        window.history.replaceState(null, null,
+          l.pathname.slice(0, -1) + (q.p || '') +
+          (q.q ? ('?' + q.q) : '') +
+          l.hash
+        );
+      }
+    }
+  }(window.location))
+</script>
+
+<body>
+  <app-root></app-root>
+<script src="runtime-es2015.a33098523efff3b74a23.js" type="module"></script><script src="runtime-es5.a33098523efff3b74a23.js" nomodule defer></script><script src="polyfills-es5.1e12eddac5608c81da8a.js" nomodule defer></script><script src="polyfills-es2015.f392e19f57d764e29fef.js" type="module"></script><script src="main-es2015.4293f7c3cb26f48b73d3.js" type="module"></script><script src="main-es5.4293f7c3cb26f48b73d3.js" nomodule defer></script></body>
+
+</html>
