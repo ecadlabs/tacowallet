@@ -11,7 +11,7 @@ function uuidv4() {
   });
 }
 
-const provider = 'https://api.tez.ie/rpc/carthagenet';
+const provider = 'https://api.tez.ie/rpc/delphinet';
 
 @Injectable({
   providedIn: 'root',
