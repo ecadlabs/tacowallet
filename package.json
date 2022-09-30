@@ -28,7 +28,7 @@
     "@taquito/taquito": "^7.1.0-beta.0 ",
     "bs58check": "^2.1.2",
     "core-js": "^3.7.0",
-    "matrix-js-sdk": "^6.2.2",
+    "matrix-js-sdk": "^19.7.0",
     "rxjs": "~6.5.5",
     "tslib": "^2.0.3",
     "zone.js": "~0.10.3"
